@@ -8,7 +8,7 @@
         /* Style global */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #0c0c0f;
             color: #333;
             margin: 0;
             padding: 0;
@@ -19,17 +19,17 @@
             color: #ff8800;
         }
         form {
-            width: 90%;
-            max-width: 600px;
+            width: 100%;
+            max-width: 500px;
             margin: 20px auto;
-            background-color: #fff;
+            background-image: url(images/formes-papier-psychedeliques-espace-copie_23-2149378246.webp);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         label {
             display: block;
-            margin: 10px 0 5px;
+            margin: 2px 0 0px;
             font-weight: bold;
         }
         .phone-container {
@@ -43,7 +43,7 @@
         select, input {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 9px;
             border: 1px solid #ddd;
             border-radius: 5px;
             box-sizing: border-box;
@@ -130,24 +130,25 @@
 
         <!-- Bouton Enregistrer -->
         <button type="submit">Enregistrer</button>
+
     </form>
 
     <script>
         const countryData = {
-            "SN": { indicative: "+221", payment: ["Orange Money", "Wave"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "CD": { indicative: "+243", payment: ["M-Pesa", "Airtel Money", "Orange Money"], amounts: [100, 200, 300, 400, 500] },
-            "GN": { indicative: "+224", payment: ["Orange Money", "MTN Money", "Banque"], amounts: [1000000, 2000000, 3000000, 4000000, 5000000] },
-            "default": { indicative: "+237", payment: ["Orange Money"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "BJ": { indicative: "+229", payment: ["MTN Money", "Moov Money"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "BF": { indicative: "+226", payment: ["Orange Money", "Wave", "Moov Money"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "CI": { indicative: "+225", payment: ["Orange Money", "Wave", "MTN Money", "Moov Money"], amounts: [100000, 200000, 300000, 400000, 500000] },
+            "SN": { indicative: "+221", payment: ["Orange Money", "Wave"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
+            "CD": { indicative: "+243", payment: ["M-Pesa", "Airtel Money", "Orange Money"], amounts: [50, 100, 200, 300, 400, 500] },
+            "GN": { indicative: "+224", payment: ["Orange Money", "MTN Money", "Banque"], amounts: [500000, 1000000, 2000000, 3000000, 4000000, 5000000] },
+            "default": { indicative: "+237", payment: ["Orange Money"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
+            "BJ": { indicative: "+229", payment: ["MTN Money", "Moov Money"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
+            "BF": { indicative: "+226", payment: ["Orange Money", "Wave", "Moov Money"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
+            "CI": { indicative: "+225", payment: ["Orange Money", "Wave", "MTN Money", "Moov Money"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
             "NE": { indicative: "+227", payment: ["Orange Money", "Moov Money", "Airtel Money", "Mynita", "Zamani"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "TG": { indicative: "+228", payment: ["T-Money", "Moov Money"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "TD": { indicative: "+235", payment: ["Airtel Money", "Moov Money"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "ML": { indicative: "+223", payment: ["Orange Money", "Wave"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "GA": { indicative: "+241", payment: ["Airtel Money", "Moov MONEY"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "CF": { indicative: "+236", payment: ["Orange Money"], amounts: [100000, 200000, 300000, 400000, 500000] },
-            "CG": { indicative: "+242", payment: ["Airtel Money", "MTN Money"], amounts: [100000, 200000, 300000, 400000, 500000] },
+            "TG": { indicative: "+228", payment: ["T-Money", "Moov Money"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
+            "TD": { indicative: "+235", payment: ["Airtel Money", "Moov Money"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
+            "ML": { indicative: "+223", payment: ["Orange Money", "Wave"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
+            "GA": { indicative: "+241", payment: ["Airtel Money", "Moov MONEY"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
+            "CF": { indicative: "+236", payment: ["Orange Money"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
+            "CG": { indicative: "+242", payment: ["Airtel Money", "MTN Money"], amounts: [50000, 100000, 200000, 300000, 400000, 500000] },
         };
 
         function updateIndicativeAndPayment() {
@@ -182,7 +183,7 @@
         function calculateAmountToReceive() {
             const amount = document.getElementById("amount").value;
             const receive = amount.replace(/\D/g, "") * 6.5;
-            document.getElementById("amountReceive").value = `${receive} XOF`;
+            document.getElementById("amountReceive").value = `${receive} $`;
         }
 
         function submitForm(event) {
