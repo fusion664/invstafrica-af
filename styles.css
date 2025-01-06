@@ -1,6 +1,6 @@
 /* Styles généraux */
 body {
-    background-color: #121212;
+    background-color: #000000;
     color: #ffffff;
     font-family: Arial, sans-serif;
     margin: 0;
@@ -60,13 +60,14 @@ header h1 {
 #tradingview-container {
     margin: 20px auto;
     height: 500px;
-    width: 90%;
+    width: 97%;
 }
 
 /* Prix */
 .price-section {
-    background-color: #12121288;
+    background-color: #1d1c1c;
     margin: 20px;
+    border-radius: 10px;
 }
 
 .orange-text {
@@ -81,8 +82,9 @@ header h1 {
 /* Simulation des retraits */
 #retraits-simulation {
     position: fixed;
-    color: #00C853;
+    color: #2a7906;
     bottom: 20px;
     left: 20px;
     text-align: left;
+    background: #00000018;
 }
