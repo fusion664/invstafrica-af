@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dépôt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #bbdefb);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1976d2;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input{
+            width: 96%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #1976d2;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0d47a1;
+        }
+
+        .verification-zone {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f5f5f5;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+        }
+
+        .success-message {
+            color: green;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dépôt</h1>
+        <form id="depositForm">
+            <label for="country">Pays :</label>
+            <select id="country" required>
+                <option value="">Choisissez un pays</option>
+                <option value="Cameroun">Cameroun</option>
+                <option value="Bénin">Bénin</option>
+                <option value="Burkina Faso">Burkina Faso</option>
+                <option value="Niger">Niger</option>
+                <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                <option value="Sénégal">Sénégal</option>
+                <option value="Mali">Mali</option>
+                <option value="Tchad">Tchad</option>
+                <option value="Kinshasa">Kinshasa</option>
+                <option value="Congo Brazzaville">Congo Brazzaville</option>
+            </select>
+
+            <label for="paymentMode">Mode de paiement :</label>
+            <select id="paymentMode" disabled required>
+                <option value="">Choisissez un mode de paiement</option>
+            </select>
+
+            <div id="paymentNumberField" style="display: none;">
+                <label for="paymentNumber">Numéro de paiement :</label>
+                <input type="text" id="paymentNumber" readonly>
+            </div>
+
+            <label for="amount">Montant (minimum 10 000 FCFA) :</label>
+            <input type="number" id="amount" min="10000" value="10000" required>
+
+            <button type="button" onclick="showVerificationZone()">Déposer</button>
+        </form>
+
+        <div class="verification-zone" id="verificationZone">
+            <h2>Vérification</h2>
+            <label for="screenshot">Envoyez la capture d'écran :</label>
+            <input type="file" id="screenshot" accept="image/*" required>
+            <button type="button" onclick="verifyDeposit()">Vérifier</button>
+        </div>
+
+        <div id="resultMessage"></div>
+    </div>
+
+    <script>
+        const paymentModes = {
+            Cameroun: { modes: ["Orange Money", "MTN Mobile Money"], numbers: ["+237 655 000 000", "+237 671 397 435"] },
+            Bénin: { modes: ["Moov Money", "MTN Mobile Money"], numbers: ["+229 9600 0000", "+229 9700 0000"] },
+            "Burkina Faso": { modes: ["Orange Money"], numbers: ["+226 7000 0000"] },
+            Niger: { modes: ["Orange Money"], numbers: ["+227 9800 0000"] },
+            "Côte d'Ivoire": { modes: ["Orange Money", "MTN Mobile Money"], numbers: ["+225 079 770 7301", "+225 0500 0000"] },
+            Sénégal: { modes: ["Orange Money"], numbers: ["+221 7700 0000"] },
+            Mali: { modes: ["Orange Money"], numbers: ["+223 7500 0000"] },
+            Tchad: { modes: ["Airtel Money"], numbers: ["+235 6600 0000"] },
+            Kinshasa: { modes: ["M-Pesa"], numbers: ["+243 9700 0000"] },
+            "Congo Brazzaville": { modes: ["Airtel Money"], numbers: ["+242 050 371 200"] }
+        };
+
+        document.getElementById("country").addEventListener("change", function () {
+            const country = this.value;
+            const paymentMode = document.getElementById("paymentMode");
+            const paymentNumberField = document.getElementById("paymentNumberField");
+
+            if (country && paymentModes[country]) {
+                paymentMode.disabled = false;
+                paymentMode.innerHTML = '<option value="">Choisissez un mode de paiement</option>';
+                paymentModes[country].modes.forEach((mode, index) => {
+                    const option = document.createElement("option");
+                    option.value = index;
+                    option.textContent = mode;
+                    paymentMode.appendChild(option);
+                });
+
+                paymentMode.addEventListener("change", function () {
+                    const selectedIndex = this.value;
+                    if (selectedIndex !== "") {
+                        paymentNumberField.style.display = "block";
+                        document.getElementById("paymentNumber").value = paymentModes[country].numbers[selectedIndex];
+                    } else {
+                        paymentNumberField.style.display = "none";
+                    }
+                });
+            } else {
+                paymentMode.disabled = true;
+                paymentMode.innerHTML = '<option value="">Aucun mode de paiement disponible</option>';
+                paymentNumberField.style.display = "none";
+            }
+        });
+
+        function showVerificationZone() {
+            document.getElementById("verificationZone").style.display = "block";
+        }
+
+        function verifyDeposit() {
+            const screenshot = document.getElementById("screenshot").files[0];
+            const amount = document.getElementById("amount").value;
+
+            if (!screenshot) {
+                alert("Veuillez envoyer une capture d'écran.");
+                return;
+            }
+
+            // Simuler la vérification (la vérification réelle nécessiterait un traitement d'image)
+            const isVerified = true; // Remplacez par une vérification réelle
+
+            if (isVerified) {
+                const currentBalance = parseFloat(localStorage.getItem("secureBalance") || "0");
+                const newBalance = currentBalance + parseFloat(amount);
+                localStorage.setItem("secureBalance", newBalance);
+
+                document.getElementById("resultMessage").innerHTML = `
+                    <p class="success-message">Dépôt effectué avec succès !</p>
+                `;
+            } else {
+                document.getElementById("resultMessage").innerHTML = `
+                    <p class="error-message">Erreur : les informations de dépôt ne correspondent pas.</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
