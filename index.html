@@ -1,71 +1,137 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Africa Investissement</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://s3.tradingview.com/tv.js"></script> <!-- Intégration TradingView -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion & Inscription</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('images/5bc039303aeb3-99f0a2490eb6772b2a83e8f58e88e87c.png') no-repeat center center fixed;
+      background-size: contain;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .logo {
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 120px;
+    }
+
+    .form-box {
+      width: 350px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-box form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-box label {
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .form-box input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .form-box button {
+      padding: 10px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .form-box button:hover {
+      background: #218838;
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 15px;
+      color: #007bff;
+      cursor: pointer;
+    }
+
+    .toggle-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <!-- En-tête -->
-    <header>
-        <h1>AFRICA INVESTISSEMENT</h1>
-        <p id="solde">Votre solde : <span id="montant-solde">0 XOF</span></p>
-    </header>
-
-    <!-- Boutons principaux -->
-    <section class="buttons">
-        <button id="investir-btn" class="btn-orange" onclick="window.location.href='depot.html'">Recharger</button>
-        <button id="investir-btn" class="btn-orange" onclick="window.location.href='investir.html'">Je veux investir</button>
-        <button id="retrait-btn" class="btn-orange">Retirer</button>
-    </section>
-
-    <!-- Section TradingView -->
-    <section id="tradingview-container">
-
-    <!-- TradingView Widget -->
-        <div id="tradingview-widget"></div>
-    </div> 
-
-    <script type="text/javascript">
-        new TradingView.widget({
-            "container_id": "tradingview-widget",
-            "width": "100%",
-            "height": "500",
-            "symbol": "BINANCE:BTCUSDT",
-            "interval": "1",
-            "timezone": "Etc/UTC",
-            "theme": "dark",
-            "style": "1",
-            "locale": "fr",
-            "toolbar_bg": "#f1f3f6",
-            "enable_publishing": false,
-            "hide_side_toolbar": false,
-            "allow_symbol_change": true
-        });
-    </script>
-
-    </section>
-
-    <!-- Section Variation des prix -->
-    <section class="price-section">
-        <h2>BTC/USDT</h2>
-        <div id="price-container">
-            <span id="prix-actuel" class="orange-text">--</span>
-            <div id="variation"></div>
+  <div class="container">
+    <div class="logo">
+      <img src="images/5bc039303aeb3-99f0a2490eb6772b2a83e8f58e88e87c.png" alt="Logo de l'entreprise">
+    </div>
+    <div class="form-box">
+      <h2 id="form-title">Connexion</h2>
+      <form id="auth-form" action="dashboard.html" method="GET">
+        <label for="email">Adresse e-mail</label>
+        <input type="email" id="email" name="email" placeholder="Entrez votre e-mail" required>
+        
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+        
+        <div id="confirm-password-field" style="display: none;">
+          <label for="confirm-password">Confirmer le mot de passe</label>
+          <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmez votre mot de passe">
         </div>
-        <div class="buttons-buy-sell">
-            <button id="acheter-btn" class="btn-vert">Acheter</button>
-            <button id="vendre-btn" class="btn-rouge">Vendre</button>
-        </div>
-    </section>
 
-    <!-- Notifications des retraits -->
-    <section id="retraits-simulation">
-        <!-- Les retraits simulés apparaîtront ici -->
-    </section>
+        <button type="submit">Se connecter</button>
+      </form>
+      <p class="toggle-link" onclick="toggleForm()">Pas encore inscrit ? Créez un compte</p>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <script>
+    const formTitle = document.getElementById('form-title');
+    const authForm = document.getElementById('auth-form');
+    const confirmPasswordField = document.getElementById('confirm-password-field');
+    const toggleLink = document.querySelector('.toggle-link');
+
+    function toggleForm() {
+      if (formTitle.textContent === 'Connexion') {
+        formTitle.textContent = 'Inscription';
+        confirmPasswordField.style.display = 'block';
+        toggleLink.textContent = 'Déjà inscrit ? Connectez-vous';
+        authForm.querySelector('button').textContent = 'S\'inscrire';
+      } else {
+        formTitle.textContent = 'Connexion';
+        confirmPasswordField.style.display = 'none';
+        toggleLink.textContent = 'Pas encore inscrit ? Créez un compte';
+        authForm.querySelector('button').textContent = 'Se connecter';
+      }
+    }
+  </script>
 </body>
 </html>
